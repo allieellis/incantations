@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: Libre Baskerville, serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* This will take the full viewport height */
+        background-image: url("/static/bg.png"); /* Adjust the path accordingly */
+        background-size: cover; /* This ensures the image covers the whole viewport */
+        background-repeat: no-repeat; /* This ensures the image doesn't repeat */
+        background-position: center;
+      }
+
+      .container {
+        text-align: center;
+        background-color: #ffffff; /* Optional: added for better contrast */
+        padding: 40px;
+        border-radius: 10px; /* Optional: added for aesthetics */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: added for aesthetics */
+      }
+    </style>
+    <title>Magical Incantation Generator</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>I LOVE YOU LINDA!</h1>
+      <h2>Describe your magical intentions:</h2>
+      <textarea id="description" rows="4" cols="50"></textarea>
+      <br />
+      <button onclick="generateIncantation()">Generate Incantation</button>
+      <h2>Your Incantation:</h2>
+      <p id="incantation"></p>
+
+      <script>
+        function generateIncantation() {
+          let description = document.getElementById("description").value;
+          fetch("/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ description: description }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              document.getElementById("incantation").innerText =
+                data.incantation;
+            });
+        }
+      </script>
+    </div>
+  </body>
+</html>
